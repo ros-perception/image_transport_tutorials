@@ -1,17 +1,17 @@
-# image_transport_tutorial
+# image_transport_tutorials
 
-Before starting any of the tutorials below, create a workspace and clone the `image_common` repository so you can inspect and manipulate the code:
+Before starting any of the tutorials below, create a workspace and clone this repository so you can inspect and manipulate the code:
 
 ```
-$ mkdir -p ~/image_transport_ws/src
-$ cd ~/image_transport_ws/src
-$ git clone --branch ros2 https://github.com/ros-perception/image_common.git
+$ mkdir -p ~/image_transport_tutorials_ws/src
+$ cd ~/image_transport_tutorials_ws/src
+$ git clone https://github.com/ros-perception/image_transport_tutorials.git
 ```
 
 Install needed dependencies:
 
 ```
-$ cd ~/image_transport_ws/
+$ cd ~/image_transport_tutorials_ws/
 $ source /opt/ros/galactic/setup.bash
 $ rosdep install -i --from-path src --rosdistro galactic -y
 $ colcon build
@@ -31,10 +31,10 @@ Now, let's break down the code piece by piece.
 For lines not explained here, review [Writing a Simple Publisher and Subscriber (C++)](https://docs.ros.org/en/galactic/Tutorials/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html).
 
 ```
-#include <cv_bridge/cv_bridge.h>
-#include <image_transport/image_transport.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <rclcpp/rclcpp.hpp>
+#include "cv_bridge/cv_bridge.h"
+#include "image_transport/image_transport.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "rclcpp/rclcpp.hpp"
 ```
 
 These headers will allow us to load an image using OpenCV, convert it to the ROS message format, and publish it.
@@ -106,12 +106,11 @@ Take a look at [my_subscriber.cpp](src/my_subscriber.cpp).
 Now, let's break down the code piece by piece.
 
 ```
-#include <cv_bridge/cv_bridge.h>
-#include <image_transport/image_transport.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <rclcpp/rclcpp.hpp>
-
+#include "cv_bridge/cv_bridge.h"
+#include "image_transport/image_transport.hpp"
+#include "opencv2/highgui/highgui.hpp"
 #include "rclcpp/logging.hpp"
+#include "rclcpp/rclcpp.hpp"
 ```
 
 These headers will allow us to subscribe to image messages, display images using OpenCV's simple GUI capabilities, and log errors.
@@ -169,7 +168,7 @@ In a previous tutorial we made a publisher node called `my_publisher`.
 Now run the node with an image file as the command-line argument:
 
 ```
-$ ros2 run image_transport_tutorial my_publisher path/to/some/image.jpg
+$ ros2 run image_transport_tutorials my_publisher path/to/some/image.jpg
 ```
 
 To check that your node is running properly, list the topics being published:
@@ -197,7 +196,7 @@ Subscription count: 0
 In the last tutorial, we made a subscriber node called `my_subscriber`. Now run it:
 
 ```
-$ ros2 run image_transport_tutorial my_subscriber
+$ ros2 run image_transport_tutorials my_subscriber
 ```
 
 You should see a window pop up with the image you gave to the publisher.
@@ -258,7 +257,7 @@ The key is that `image_transport` subscribers check the parameter `_image_transp
 Let's set this parameter and start a subscriber node with name "compressed_listener":
 
 ```
-$ ros2 run image_transport_tutorial my_subscriber --ros-args --remap __name:=compressed_listener -p _image_transport:=compressed
+$ ros2 run image_transport_tutorials my_subscriber --ros-args --remap __name:=compressed_listener -p _image_transport:=compressed
 ```
 
 You should see an identical image window pop up.
