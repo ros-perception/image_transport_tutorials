@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef IMAGE_TRANSPORT_TUTORIAL__RESIZED_PUBLISHER_HPP_
-#define IMAGE_TRANSPORT_TUTORIAL__RESIZED_PUBLISHER_HPP_
-
-#include <image_transport/simple_publisher_plugin.hpp>
-#include <image_transport_tutorial/msg/resized_image.hpp>
+#ifndef IMAGE_TRANSPORT_TUTORIALS__RESIZED_PUBLISHER_HPP_
+#define IMAGE_TRANSPORT_TUTORIALS__RESIZED_PUBLISHER_HPP_
 
 #include <string>
 
+#include "image_transport/simple_publisher_plugin.hpp"
+#include "image_transport_tutorials/msg/resized_image.hpp"
+
+
 class ResizedPublisher : public image_transport::SimplePublisherPlugin
-  <image_transport_tutorial::msg::ResizedImage>
+  <image_transport_tutorials::msg::ResizedImage>
 {
 public:
   virtual std::string getTransportName() const
@@ -35,4 +36,4 @@ protected:
     const PublishFn & publish_fn) const;
 };
 
-#endif  // IMAGE_TRANSPORT_TUTORIAL__RESIZED_PUBLISHER_HPP_
+#endif  // IMAGE_TRANSPORT_TUTORIALS__RESIZED_PUBLISHER_HPP_

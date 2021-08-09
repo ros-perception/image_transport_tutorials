@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(image_transport_tutorial)
+project(image_transport_tutorials)
 
 # Default to C++17
 if(NOT CMAKE_CXX_STANDARD)

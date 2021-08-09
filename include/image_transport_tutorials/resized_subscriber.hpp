@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef IMAGE_TRANSPORT_TUTORIAL__RESIZED_SUBSCRIBER_HPP_
-#define IMAGE_TRANSPORT_TUTORIAL__RESIZED_SUBSCRIBER_HPP_
-
-#include <image_transport/simple_subscriber_plugin.hpp>
-#include <image_transport_tutorial/msg/resized_image.hpp>
+#ifndef IMAGE_TRANSPORT_TUTORIALS__RESIZED_SUBSCRIBER_HPP_
+#define IMAGE_TRANSPORT_TUTORIALS__RESIZED_SUBSCRIBER_HPP_
 
 #include <string>
 
+#include "image_transport/simple_subscriber_plugin.hpp"
+#include "image_transport_tutorials/msg/resized_image.hpp"
+
 class ResizedSubscriber : public image_transport::SimpleSubscriberPlugin
-  <image_transport_tutorial::msg::ResizedImage>
+  <image_transport_tutorials::msg::ResizedImage>
 {
 public:
   virtual ~ResizedSubscriber() {}
@@ -32,19 +32,9 @@ public:
   }
 
 protected:
-  void subscribeImpl(
-    rclcpp::Node * node,
-    const std::string & base_topic,
-    const Callback & callback,
-    rmw_qos_profile_t custom_qos,
-    rclcpp::SubscriptionOptions options) override
-  {
-    this->subscribeImplWithOptions(node, base_topic, callback, custom_qos, options);
-  }
-
   virtual void internalCallback(
-    const typename image_transport_tutorial::msg::ResizedImage::ConstSharedPtr & message,
+    const typename image_transport_tutorials::msg::ResizedImage::ConstSharedPtr & message,
     const Callback & user_cb);
 };
 
-#endif  // IMAGE_TRANSPORT_TUTORIAL__RESIZED_SUBSCRIBER_HPP_
+#endif  // IMAGE_TRANSPORT_TUTORIALS__RESIZED_SUBSCRIBER_HPP_

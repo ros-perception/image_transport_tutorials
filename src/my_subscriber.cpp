@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <cv_bridge/cv_bridge.h>
-#include <image_transport/image_transport.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <rclcpp/rclcpp.hpp>
-
+#include "cv_bridge/cv_bridge.h"
+#include "image_transport/image_transport.hpp"
+#include "opencv2/highgui/highgui.hpp"
 #include "rclcpp/logging.hpp"
+#include "rclcpp/rclcpp.hpp"
 
 void imageCallback(const sensor_msgs::msg::Image::ConstSharedPtr & msg)
 {
