@@ -135,7 +135,6 @@ try {
 The body of the callback. 
 We convert the ROS image message into an OpenCV image with BGR pixel encoding, then show it in a display window.
 
-
 ```
 rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("image_listener", options);
 image_transport::ImageTransport it(node);
