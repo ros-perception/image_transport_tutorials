@@ -17,7 +17,8 @@
 #include <memory>
 
 #include "cv_bridge/cv_bridge.h"
-#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/mat.hpp"
+#include "opencv2/imgproc.hpp"
 #include "rclcpp/logging.hpp"
 
 void ResizedPublisher::publish(
@@ -28,7 +29,7 @@ void ResizedPublisher::publish(
   std::shared_ptr<void const> tracked_object;
   try {
     cv_image = cv_bridge::toCvShare(message, tracked_object, message.encoding)->image;
-  } catch (cv::Exception & e) {
+  } catch (const cv::Exception & e) {
     auto logger = rclcpp::get_logger("resized_publisher");
     RCLCPP_ERROR(
       logger, "Could not convert from '%s' to '%s'.",

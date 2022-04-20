@@ -13,11 +13,12 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(image_transport REQUIRED)
-find_package(OpenCV REQUIRED)
+find_package(OpenCV REQUIRED COMPONENTS highgui imgcodecs imgproc videoio)
 find_package(pluginlib REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 
 include_directories(include)
 
@@ -30,42 +31,52 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   DEPENDENCIES sensor_msgs
 )
 
+rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
+
 # add the publisher example
 add_executable(my_publisher src/my_publisher.cpp)
-ament_target_dependencies(my_publisher
-  "cv_bridge"
-  "image_transport"
-  "OpenCV"
-  "rclcpp")
+target_link_libraries(my_publisher PRIVATE
+  cv_bridge::cv_bridge
+  image_transport::image_transport
+  opencv_imgcodecs
+  rclcpp::rclcpp
+)
 
 # add the subscriber example
 add_executable(my_subscriber src/my_subscriber.cpp)
-ament_target_dependencies(my_subscriber
-  "cv_bridge"
-  "image_transport"
-  "OpenCV"
-  "rclcpp")
+target_link_libraries(my_subscriber
+  cv_bridge::cv_bridge
+  image_transport::image_transport
+  opencv_highgui
+  rclcpp::rclcpp
+)
 
 # add the plugin example
 add_library(resized_plugins src/manifest.cpp src/resized_publisher.cpp src/resized_subscriber.cpp)
-ament_target_dependencies(resized_plugins
-  "image_transport"
-  "OpenCV")
+target_link_libraries(resized_plugins
+  "${cpp_typesupport_target}"
+  cv_bridge::cv_bridge
+  image_transport::image_transport
+  opencv_imgproc
+  pluginlib::pluginlib
+  rclcpp::rclcpp
+  "${sensor_msgs_TARGETS}"
+)
 
 # add the publisher from video example
 add_executable(publisher_from_video src/publisher_from_video.cpp)
-ament_target_dependencies(publisher_from_video
-  "cv_bridge"
-  "image_transport"
-  "OpenCV"
-  "rclcpp")
+target_link_libraries(publisher_from_video
+  cv_bridge::cv_bridge
+  image_transport::image_transport
+  opencv_highgui
+  opencv_videoio
+  rclcpp::rclcpp
+  "${sensor_msgs_TARGETS}"
+  "${std_msgs_TARGETS}"
+)
 
-# Install plugin descriptions
+# # Install plugin descriptions
 pluginlib_export_plugin_description_file(${PROJECT_NAME} resized_plugins.xml)
-
-# Link interface
-rosidl_target_interfaces(resized_plugins
-  ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 # Install executables
 install(
@@ -76,11 +87,11 @@ install(
 # Install include directories
 install(
   DIRECTORY include/
-  DESTINATION include
+  DESTINATION include/${PROJECT_NAME}
 )
 
 ament_export_include_directories(include)
-ament_export_dependencies(cv_bridge image_transport pluginlib rosidl_default_runtime rclcpp sensor_msgs)
+ament_export_dependencies(cv_bridge image_transport pluginlib rosidl_default_runtime rclcpp sensor_msgs std_msgs)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

@@ -17,6 +17,8 @@
 
 #include <string>
 
+#include "sensor_msgs/msg/image.hpp"
+
 #include "image_transport/simple_publisher_plugin.hpp"
 #include "image_transport_tutorials/msg/resized_image.hpp"
 
