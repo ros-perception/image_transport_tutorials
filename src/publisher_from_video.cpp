@@ -16,13 +16,18 @@
 
 #include "cv_bridge/cv_bridge.h"
 #include "image_transport/image_transport.hpp"
-#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/core/mat.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/videoio.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/header.hpp"
 
 int main(int argc, char ** argv)
 {
   // Check if video source has been passed as a parameter
-  if (argv[1] == NULL) {return 1;}
+  if (argv[1] == NULL) {
+    return 1;
+  }
 
   rclcpp::init(argc, argv);
   rclcpp::NodeOptions options;
@@ -35,11 +40,15 @@ int main(int argc, char ** argv)
   int video_source;
 
   // Check if it is indeed a number
-  if (!(video_sourceCmd >> video_source)) {return 1;}
+  if (!(video_sourceCmd >> video_source)) {
+    return 1;
+  }
 
   cv::VideoCapture cap(video_source);
   // Check if video device can be opened with the given index
-  if (!cap.isOpened()) {return 1;}
+  if (!cap.isOpened()) {
+    return 1;
+  }
   cv::Mat frame;
   std_msgs::msg::Header hdr;
   sensor_msgs::msg::Image::SharedPtr msg;
@@ -57,4 +66,6 @@ int main(int argc, char ** argv)
     rclcpp::spin_some(node);
     loop_rate.sleep();
   }
+
+  return 0;
 }

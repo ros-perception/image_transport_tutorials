@@ -17,7 +17,8 @@
 #include <memory>
 
 #include "cv_bridge/cv_bridge.h"
-#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/mat.hpp"
+#include "opencv2/imgproc.hpp"
 
 void ResizedSubscriber::internalCallback(
   const image_transport_tutorials::msg::ResizedImage::ConstSharedPtr & msg,
