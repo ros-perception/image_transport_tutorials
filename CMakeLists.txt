@@ -75,7 +75,7 @@ target_link_libraries(publisher_from_video
   "${std_msgs_TARGETS}"
 )
 
-# # Install plugin descriptions
+# Install plugin descriptions
 pluginlib_export_plugin_description_file(${PROJECT_NAME} resized_plugins.xml)
 
 # Install executables
