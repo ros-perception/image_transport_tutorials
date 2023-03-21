@@ -46,6 +46,15 @@ ament_target_dependencies(my_subscriber
   "OpenCV"
   "rclcpp")
 
+# add the class subscriber example
+add_executable(my_class_subscriber src/my_class_subscriber.cpp)
+ament_target_dependencies(my_class_subscriber
+        "cv_bridge"
+        "image_transport"
+        "OpenCV"
+        "rclcpp")
+
+
 # add the plugin example
 add_library(resized_plugins src/manifest.cpp src/resized_publisher.cpp src/resized_subscriber.cpp)
 ament_target_dependencies(resized_plugins
@@ -69,7 +78,7 @@ rosidl_target_interfaces(resized_plugins
 
 # Install executables
 install(
-  TARGETS my_publisher my_subscriber resized_plugins publisher_from_video
+  TARGETS my_publisher my_subscriber my_class_subscriber resized_plugins publisher_from_video
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
