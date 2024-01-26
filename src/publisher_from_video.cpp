@@ -14,7 +14,7 @@
 
 #include <sstream>
 
-#include "cv_bridge/cv_bridge.h"
+#include "cv_bridge/cv_bridge.hpp"
 #include "image_transport/image_transport.hpp"
 #include "opencv2/core/mat.hpp"
 #include "opencv2/highgui.hpp"
