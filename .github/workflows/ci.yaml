@@ -1,0 +1,32 @@
+name: Build and test
+on:
+  # Run this action whenever a pull request is made
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Note that we pass each job a different name to distinguish each linter job
+  image_transport_tutorials_build_rolling:
+    name: image_transport_tutorials_build_rolling
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: rolling
+      - uses: ros-tooling/action-ros-ci@v0.3
+        with:
+          package-name: image_transport_tutorials
+          target-ros2-distro: rolling
+  image_transport_tutorials_build_iron:
+    name: image_transport_tutorials_build_iron
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: iron
+      - uses: ros-tooling/action-ros-ci@v0.3
+        with:
+          package-name: image_transport_tutorials
+          target-ros2-distro: iron
