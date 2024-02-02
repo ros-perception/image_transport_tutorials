@@ -35,10 +35,13 @@ int main(int argc, char ** argv)
   rclcpp::init(argc, argv);
   rclcpp::NodeOptions options;
   rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("image_listener", options);
+  // TransportHints does not actually declare the parameter
+  node->declare_parameter<std::string>("image_transport", "raw");
   cv::namedWindow("view");
   cv::startWindowThread();
   image_transport::ImageTransport it(node);
-  image_transport::Subscriber sub = it.subscribe("camera/image", 1, imageCallback);
+  image_transport::TransportHints hints(node.get());
+  image_transport::Subscriber sub = it.subscribe("camera/image", 1, imageCallback, &hints);
   rclcpp::spin(node);
   cv::destroyWindow("view");
 

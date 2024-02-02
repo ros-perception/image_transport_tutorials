@@ -12,12 +12,12 @@ Install needed dependencies:
 
 ```
 $ cd ~/image_transport_tutorials_ws/
-$ source /opt/ros/galactic/setup.bash
-$ rosdep install -i --from-path src --rosdistro galactic -y
+$ source /opt/ros/iron/setup.bash
+$ rosdep install -i --from-path src --rosdistro iron -y
 $ colcon build
 ```
 
-Make sure to include the correct setup file (in the above example it is for Galactic on Ubuntu and for bash).
+Make sure to include the correct setup file (in the above example it is for Iron on Ubuntu and for bash).
 
 ## Writing a Simple Image Publisher (C++)
 Description: This tutorial shows how to create a publisher node that will continually publish an image.
@@ -239,13 +239,13 @@ Notice that `compressed_image_transport` is not a dependency of your package; `i
 The easiest way to add the "compressed" transport is to install the package:
 
 ```
-$ sudo apt-get install ros-galactic-compressed-image-transport
+$ sudo apt-get install ros-iron-compressed-image-transport
 ```
 
 Or install all the transport plugins at once:
 
 ```
-$ sudo apt-get install ros-galactic-image-transport-plugins
+$ sudo apt-get install ros-iron-image-transport-plugins
 ```
 
 But you can also build from source.
@@ -256,7 +256,7 @@ The key is that `image_transport` subscribers check the parameter `_image_transp
 Let's set this parameter and start a subscriber node with name "compressed_listener":
 
 ```
-$ ros2 run image_transport_tutorials my_subscriber --ros-args --remap __name:=compressed_listener -p _image_transport:=compressed
+$ ros2 run image_transport_tutorials my_subscriber --ros-args --remap __name:=compressed_listener -p image_transport:=compressed
 ```
 
 You should see an identical image window pop up.
