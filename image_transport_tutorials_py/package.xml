@@ -3,9 +3,16 @@
 <package format="3">
   <name>image_transport_tutorials_py</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="tfoldi@xsi.hu">tamas.foldi</maintainer>
+  <description>Tutorials for image_transport_py</description>
+  <author email="tfoldi@xsi.hu">Tamas Foldi</maintainer>
+  <maintainer email="jacob@openrobotics.org">Jacob Perron</maintainer>
   <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>image_transport</depend>
+  <depend>image_transport_py</depend>
+  <depend>sensor_msgs</depend>
+  <depend>cv_bridge</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

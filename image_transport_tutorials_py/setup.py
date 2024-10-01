@@ -15,11 +15,13 @@ setup(
     zip_safe=True,
     maintainer='tamas.foldi',
     maintainer_email='tfoldi@xsi.hu',
-    description='TODO: Package description',
+    description='Tutorials for image_transport_py',
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'my_publisher = image_transport_tutorials_py.my_publisher:main',
+            'my_subscriber = image_transport_tutorials_py.my_subscriber:main',
         ],
     },
 )

@@ -24,7 +24,7 @@ Description: This tutorial shows how to create a publisher node that will contin
 
 Tutorial Level: Beginner
 
-Take a look at [my_publisher.cpp](src/my_publisher.cpp).
+Take a look at [my_publisher.cpp](image_transport_tutorials/src/my_publisher.cpp).
 
 ### The code explained
 Now, let's break down the code piece by piece. 
@@ -86,7 +86,7 @@ In most cases, however, this is not a very practical example as you are often re
 (For example: multiple webcams mounted on a robot record the scene around it and you have to pass the image data to some other node for further analysis). 
 
 The publisher example can be modified quite easily to make it work with a video device supported by `cv::VideoCapture` (in case it is not, you have to handle it accordingly). 
-Take a look at [publisher_from_video.cpp](src/publisher_from_video.cpp) to see how a video device can be passed in as a command line argument and used as the image source.
+Take a look at [publisher_from_video.cpp](image_transport_tutorials/src/publisher_from_video.cpp) to see how a video device can be passed in as a command line argument and used as the image source.
 
 If you have a single device, you do not need to do the whole routine with passing a command line argument. 
 In this case, you can hard-code the index/address of the device and directly pass it to the video capturing structure in OpenCV (example: `cv::VideoCapture(0)` if `/dev/video0` is used). 
@@ -100,7 +100,7 @@ To learn how to actually use a specific image transport, see the next tutorial.
 
 Tutorial Level: Beginner
 
-Take a look at [my_subscriber.cpp](src/my_subscriber.cpp).
+Take a look at [my_subscriber.cpp](image_transport_tutorials/src/my_subscriber.cpp).
 
 ### The code explained
 Now, let's break down the code piece by piece.
