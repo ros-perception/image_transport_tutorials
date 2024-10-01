@@ -11,7 +11,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools', 'rclpy', 'image_transport_py'],
     zip_safe=True,
     maintainer='tamas.foldi',
     maintainer_email='tfoldi@xsi.hu',

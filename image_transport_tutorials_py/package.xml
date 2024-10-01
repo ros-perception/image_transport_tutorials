@@ -4,8 +4,7 @@
   <name>image_transport_tutorials_py</name>
   <version>0.0.0</version>
   <description>Tutorials for image_transport_py</description>
-  <author email="tfoldi@xsi.hu">Tamas Foldi</maintainer>
-  <maintainer email="jacob@openrobotics.org">Jacob Perron</maintainer>
+  <maintainer email="tfoldi@xsi.hu">Tamas Foldi</maintainer>
   <license>Apache-2.0</license>
 
   <depend>rclpy</depend>
