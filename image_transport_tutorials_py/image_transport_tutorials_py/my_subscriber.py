@@ -14,28 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
-
 from image_transport_py import ImageTransport
 import rclpy
 from rclpy.node import Node
-
-
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 
 class MySubscriber(Node):
     def __init__(self):
         super().__init__('my_subscriber')
 
-        image_transport2 = ImageTransport(
+        image_transport = ImageTransport(
             'imagetransport_sub', image_transport='compressed'
         )
-        image_transport2.subscribe('camera/image', 10, self.image_callback)
+        image_transport.subscribe('camera/image', 10, self.image_callback)
 
     def image_callback(self, msg):
-        logger.info('got a new image from frame_id:=%s' % msg.header.frame_id)
+        self.get_logger().info('got a new image from frame_id:=%s' % msg.header.frame_id)
 
 
 def main(args=None):

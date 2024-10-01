@@ -14,16 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
-
 from cv_bridge import CvBridge
 from image_transport_py import ImageTransport
 import numpy as np
 import rclpy
 from rclpy.node import Node
-
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
 
 
 class MyPublisher(Node):
