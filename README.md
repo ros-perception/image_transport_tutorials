@@ -365,9 +365,9 @@ Steps:
 1. Import Necessary Modules:
 
 ```python
-pythonfrom image_transport_py import ImageTransport
 import rclpy
 from rclpy.node import Node
+from image_transport_py import ImageTransport
 
 ```
 
