@@ -8,7 +8,6 @@
 5. [Writing a Simple Image Publisher (Python)](#py_simple_image_pub)
 6. [Writing a Simple Image Subscriber (Python)](#py_simple_image_sub)
 
-
 ## Installation
 
 Before starting any of the tutorials below, create a workspace and clone this repository so you can inspect and manipulate the code:
@@ -308,7 +307,6 @@ Tutorial Level: Beginner
 
 Take a look at [my_publisher.py](image_transport_tutorials_py/image_transport_tutorials_py/my_publisher.py).
 
-
 To publish images using `image_transport_py`, you create an `ImageTransport` object and use it to advertise an image topic. The first parameter for `ImageTransport` is the image transport
 node's name which needs to be unique in the namespace. 
 
@@ -354,12 +352,11 @@ from image_transport_py import ImageTransport
 ## Writing a Simple Image Subscriber (Python)  <a name="py_simple_image_sub"/>
 
 Description: This tutorial shows how to create a subscriber node that will receive the contents of the published 
-image.  By using the `image_transport` subscriber to subscribe to images, any image transport can be used at runtime. 
+image. By using the `image_transport` subscriber to subscribe to images, any image transport can be used at runtime. 
 
 Tutorial Level: Beginner
 
 Take a look at [my_subscriber.py](image_transport_tutorials_py/image_transport_tutorials_py/my_subscriber.py).
-
 
 To subscribe to images, use `ImageTransport` to create a subscription to the image topic.
 
@@ -367,7 +364,7 @@ Steps:
 
 1. Import Necessary Modules:
 
-```
+```python
 pythonfrom image_transport_py import ImageTransport
 import rclpy
 from rclpy.node import Node
