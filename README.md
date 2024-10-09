@@ -1,5 +1,15 @@
 # image_transport_tutorials
 
+# Table of Contents
+1. [Installation](#installation)
+2. [Writing a Simple Image Publisher (C++)](#cpp_simple_image_pub)
+3. [Writing a Simple Image Subscriber (C++)](#cpp_simple_image_sub)
+4. [Running the Simple Image Publisher and Subscriber with Different Transport](#different_publisher_subscriber)
+5. [Writing a Simple Image Publisher (Python)](#py_simple_image_pub)
+6. [Writing a Simple Image Subscriber (Python)](#py_simple_image_sub)
+
+## Installation
+
 Before starting any of the tutorials below, create a workspace and clone this repository so you can inspect and manipulate the code:
 
 ```
@@ -19,12 +29,12 @@ $ colcon build
 
 Make sure to include the correct setup file (in the above example it is for Iron on Ubuntu and for bash).
 
-## Writing a Simple Image Publisher (C++)
+## Writing a Simple Image Publisher (C++)  <a name="cpp_simple_image_pub"/>
 Description: This tutorial shows how to create a publisher node that will continually publish an image.
 
 Tutorial Level: Beginner
 
-Take a look at [my_publisher.cpp](src/my_publisher.cpp).
+Take a look at [my_publisher.cpp](image_transport_tutorials/src/my_publisher.cpp).
 
 ### The code explained
 Now, let's break down the code piece by piece. 
@@ -86,21 +96,21 @@ In most cases, however, this is not a very practical example as you are often re
 (For example: multiple webcams mounted on a robot record the scene around it and you have to pass the image data to some other node for further analysis). 
 
 The publisher example can be modified quite easily to make it work with a video device supported by `cv::VideoCapture` (in case it is not, you have to handle it accordingly). 
-Take a look at [publisher_from_video.cpp](src/publisher_from_video.cpp) to see how a video device can be passed in as a command line argument and used as the image source.
+Take a look at [publisher_from_video.cpp](image_transport_tutorials/src/publisher_from_video.cpp) to see how a video device can be passed in as a command line argument and used as the image source.
 
 If you have a single device, you do not need to do the whole routine with passing a command line argument. 
 In this case, you can hard-code the index/address of the device and directly pass it to the video capturing structure in OpenCV (example: `cv::VideoCapture(0)` if `/dev/video0` is used). 
 Multiple checks are also included here to make sure that the publisher does not break if the camera is shut down. 
 If the retrieved frame from the video device is not empty, it will then be converted to a ROS message which will be published by the publisher.
 
-## Writing a Simple Image Subscriber (C++)
+## Writing a Simple Image Subscriber (C++) <a name="cpp_simple_image_sub"/>
 Description: This tutorial shows how to create a subscriber node that will display an image on the screen. 
 By using the `image_transport` subscriber to subscribe to images, any image transport can be used at runtime. 
 To learn how to actually use a specific image transport, see the next tutorial.
 
 Tutorial Level: Beginner
 
-Take a look at [my_subscriber.cpp](src/my_subscriber.cpp).
+Take a look at [my_subscriber.cpp](image_transport_tutorials/src/my_subscriber.cpp).
 
 ### The code explained
 Now, let's break down the code piece by piece.
@@ -157,7 +167,7 @@ When the Subscriber object is destructed, it will automatically unsubscribe from
 
 In just a few lines of code, we have written a ROS image viewer that can handle images in both raw and a variety of compressed forms.
 
-## Running the Simple Image Publisher and Subscriber with Different Transports
+## Running the Simple Image Publisher and Subscriber with Different Transports <a name="different_publisher_subscriber"/>
 Description: This tutorial discusses running the simple image publisher and subscriber using multiple transports.
 
 Tutorial Level: Beginner
@@ -288,3 +298,101 @@ $ ros2 param get /image_publisher jpeg_quality
 ```
 
 This should display 15.
+
+## Writing a Simple Image Publisher (Python)  <a name="py_simple_image_pub"/>
+
+Description: This tutorial shows how to create a publisher node that will continually publish an image with random contents from Python.
+
+Tutorial Level: Beginner
+
+Take a look at [my_publisher.py](image_transport_tutorials_py/image_transport_tutorials_py/my_publisher.py).
+
+To publish images using `image_transport_py`, you create an `ImageTransport` object and use it to advertise an image topic. The first parameter for `ImageTransport` is the image transport
+node's name which needs to be unique in the namespace. 
+
+Steps:
+
+1. Import Necessary Modules:
+
+```python
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image
+from image_transport_py import ImageTransport
+```
+
+2. Initialize the Node and ImageTransport:
+
+```python
+    def __init__(self):
+        super().__init__('my_publisher')
+
+        self.image_transport = ImageTransport(
+            'imagetransport_pub', image_transport='compressed'
+        )
+        self.img_pub = self.image_transport.advertise('camera/image', 10)
+
+        self.bridge = CvBridge()
+
+        timer_period = 0.5
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+```
+
+3. Publish Images in the Callback:
+```python
+    def publish_image(self):
+        image_msg = .. # Read image from your devices
+
+        image_msg.header.stamp = self.get_clock().now().to_msg()
+        self.publisher.publish(image_msg)
+```
+
+`advertise_camera` can publish `CameraInfo` along with `Image` message.
+
+## Writing a Simple Image Subscriber (Python)  <a name="py_simple_image_sub"/>
+
+Description: This tutorial shows how to create a subscriber node that will receive the contents of the published 
+image. By using the `image_transport` subscriber to subscribe to images, any image transport can be used at runtime. 
+
+Tutorial Level: Beginner
+
+Take a look at [my_subscriber.py](image_transport_tutorials_py/image_transport_tutorials_py/my_subscriber.py).
+
+To subscribe to images, use `ImageTransport` to create a subscription to the image topic.
+
+Steps:
+
+1. Import Necessary Modules:
+
+```python
+import rclpy
+from rclpy.node import Node
+from image_transport_py import ImageTransport
+
+```
+
+2. Initialize the Node and ImageTransport:
+```python
+class MySubscriber(Node):
+    def __init__(self):
+        super().__init__('my_subscriber')
+
+        image_transport = ImageTransport(
+            'imagetransport_sub', image_transport='compressed'
+        )
+        image_transport.subscribe('camera/image', 10, self.image_callback)
+```
+
+3. Handle Incoming Images:
+```python
+    def image_callback(self, msg):
+        self.get_logger().info('got a new image from frame_id:=%s' % msg.header.frame_id)
+```
+
+`subscribe_camera` will add `CameraInfo` along with `Image` message for the callback.
+
+### Transport Selection
+
+By default, `image_transport` uses the `raw` transport. You can specify a different transport by passing `image_transport` parameter to `ImageTransport`. Alternatively,
+you can use your own ROS2 parameter file for the imagetransport node via `launch_params_filepath` parameter.
+
