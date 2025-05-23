@@ -19,14 +19,3 @@ jobs:
         with:
           package-name: image_transport_tutorials
           target-ros2-distro: rolling
-  image_transport_tutorials_build_iron:
-    name: image_transport_tutorials_build_iron
-    runs-on: ubuntu-latest
-    steps:
-      - uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: iron
-      - uses: ros-tooling/action-ros-ci@v0.3
-        with:
-          package-name: image_transport_tutorials
-          target-ros2-distro: iron
