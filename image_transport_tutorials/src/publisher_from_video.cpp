@@ -32,7 +32,7 @@ int main(int argc, char ** argv)
   rclcpp::init(argc, argv);
   rclcpp::NodeOptions options;
   rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("image_publisher", options);
-  image_transport::ImageTransport it{image_transport::RequiredInterfaces(*node)};
+  image_transport::ImageTransport it{*node};
   image_transport::Publisher pub = it.advertise("camera/image", 1);
 
   // Convert the command line parameter index for the video device to an integer

@@ -39,8 +39,8 @@ int main(int argc, char ** argv)
   node->declare_parameter<std::string>("image_transport", "raw");
   cv::namedWindow("view");
   cv::startWindowThread();
-  image_transport::ImageTransport it{image_transport::RequiredInterfaces(*node)};
-  image_transport::TransportHints hints{image_transport::RequiredInterfaces(*node)};
+  image_transport::ImageTransport it{*node};
+  image_transport::TransportHints hints{*node};
   image_transport::Subscriber sub = it.subscribe("camera/image", 1, imageCallback, &hints);
   rclcpp::spin(node);
   cv::destroyWindow("view");
