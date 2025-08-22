@@ -23,7 +23,7 @@ int main(int argc, char ** argv)
   rclcpp::init(argc, argv);
   rclcpp::NodeOptions options;
   rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("image_publisher", options);
-  image_transport::ImageTransport it(node);
+  image_transport::ImageTransport it{*node};
   image_transport::Publisher pub = it.advertise("camera/image", 1);
 
   cv::Mat image = cv::imread(argv[1], cv::IMREAD_COLOR);
