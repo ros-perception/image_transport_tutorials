@@ -54,6 +54,8 @@ int main(int argc, char ** argv)
   sensor_msgs::msg::Image::SharedPtr msg;
 
   rclcpp::WallRate loop_rate(5);
+  rclcpp::executors::SingleThreadedExecutor executor;
+  executor.add_node(node);
   while (rclcpp::ok()) {
     cap >> frame;
     // Check if grabbed frame is actually full with some content
@@ -63,7 +65,7 @@ int main(int argc, char ** argv)
       cv::waitKey(1);
     }
 
-    rclcpp::spin_some(node);
+    executor.spin_some();
     loop_rate.sleep();
   }
 
