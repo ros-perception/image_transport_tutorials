@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>resize_image_transport</name>
+  <version>0.0.0</version>
+  <description>Image transport plugin that publishes/subscribes to resized images.</description>
+  <maintainer email="jacob@openrobotics.org">Jacob Perron</maintainer>
+  <license>Apache 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>image_transport_tutorial_msgs</depend>
+  <depend>libopencv-dev</depend>
+  <depend>pluginlib</depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <image_transport plugin="${prefix}/resized_plugins.xml"/>
+  </export>
+</package>
