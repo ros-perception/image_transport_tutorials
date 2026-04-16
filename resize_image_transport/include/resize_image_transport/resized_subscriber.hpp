@@ -12,29 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef IMAGE_TRANSPORT_TUTORIALS__RESIZED_SUBSCRIBER_HPP_
-#define IMAGE_TRANSPORT_TUTORIALS__RESIZED_SUBSCRIBER_HPP_
+#ifndef RESIZE_IMAGE_TRANSPORT__RESIZED_SUBSCRIBER_HPP_
+#define RESIZE_IMAGE_TRANSPORT__RESIZED_SUBSCRIBER_HPP_
 
 #include <string>
 
 #include "image_transport/simple_subscriber_plugin.hpp"
-#include "image_transport_tutorials/msg/resized_image.hpp"
+#include "image_transport_tutorial_msgs/msg/resized_image.hpp"
 
+namespace resize_image_transport
+{
 class ResizedSubscriber : public image_transport::SimpleSubscriberPlugin
-  <image_transport_tutorials::msg::ResizedImage>
+  <image_transport_tutorial_msgs::msg::ResizedImage>
 {
 public:
   virtual ~ResizedSubscriber() {}
 
-  virtual std::string getTransportName() const
-  {
-    return "resized";
-  }
-
 protected:
   virtual void internalCallback(
-    const typename image_transport_tutorials::msg::ResizedImage::ConstSharedPtr & message,
+    const typename image_transport_tutorial_msgs::msg::ResizedImage::ConstSharedPtr & message,
     const Callback & user_cb);
 };
+}  // namespace resize_image_transport
 
-#endif  // IMAGE_TRANSPORT_TUTORIALS__RESIZED_SUBSCRIBER_HPP_
+#endif  // RESIZE_IMAGE_TRANSPORT__RESIZED_SUBSCRIBER_HPP_

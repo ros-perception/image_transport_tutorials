@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "image_transport_tutorials/resized_publisher.hpp"
+#include "resize_image_transport/resized_publisher.hpp"
 
 #include <memory>
 
@@ -21,9 +21,11 @@
 #include "opencv2/imgproc.hpp"
 #include "rclcpp/logging.hpp"
 
+namespace resize_image_transport
+{
 void ResizedPublisher::publish(
   const sensor_msgs::msg::Image & message,
-  const PublishFn & publish_fn) const
+  const PublisherT & publisher) const
 {
   cv::Mat cv_image;
   std::shared_ptr<void const> tracked_object;
@@ -45,9 +47,10 @@ void ResizedPublisher::publish(
   cv::resize(cv_image, buffer, cv::Size(new_width, new_height));
 
   // Set up ResizedImage and publish
-  image_transport_tutorials::msg::ResizedImage resized_image;
+  image_transport_tutorial_msgs::msg::ResizedImage resized_image;
   resized_image.original_height = cv_image.rows;
   resized_image.original_width = cv_image.cols;
   resized_image.image = *(cv_bridge::CvImage(message.header, "bgr8", cv_image).toImageMsg());
-  publish_fn(resized_image);
+  publisher->publish(resized_image);
 }
+}  // namespace resize_image_transport

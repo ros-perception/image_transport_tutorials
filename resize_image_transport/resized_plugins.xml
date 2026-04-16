@@ -1,0 +1,21 @@
+<library path="resize_image_transport">
+  <transport_name>resized</transport_name>
+  <message_type>image_transport_tutorial_msgs/msg/ResizedImage</message_type>
+  <class
+    name="image_transport/resized_pub"
+    type="resize_image_transport::ResizedPublisher"
+    base_class_type="image_transport::PublisherPlugin">
+    <description>
+      This plugin publishes a decimated version of the image.
+    </description>
+  </class>
+
+  <class
+    name="image_transport/resized_sub"
+    type="resize_image_transport::ResizedSubscriber"
+    base_class_type="image_transport::SubscriberPlugin">
+    <description>
+      This plugin rescales a decimated image to its original size.
+    </description>
+  </class>
+</library>
