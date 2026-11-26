@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "image_transport_tutorials/resized_subscriber.hpp"
+#include "resize_image_transport/resized_subscriber.hpp"
 
 #include <memory>
 
@@ -20,8 +20,10 @@
 #include "opencv2/core/mat.hpp"
 #include "opencv2/imgproc.hpp"
 
+namespace resize_image_transport
+{
 void ResizedSubscriber::internalCallback(
-  const image_transport_tutorials::msg::ResizedImage::ConstSharedPtr & msg,
+  const image_transport_tutorial_msgs::msg::ResizedImage::ConstSharedPtr & msg,
   const Callback & user_cb)
 {
   // This is only for optimization, not to copy the image
@@ -35,3 +37,4 @@ void ResizedSubscriber::internalCallback(
   cv_bridge::CvImage cv_img(msg->image.header, msg->image.encoding, img_restored);
   user_cb(cv_img.toImageMsg());
 }
+}  // namespace resize_image_transport
