@@ -17,6 +17,7 @@ jobs:
       - uses: ros-tooling/setup-ros@v0.7
         with:
           required-ros-distributions: rolling
+          use-ros2-testing: true
       - uses: ros-tooling/action-ros-ci@v0.3
         with:
           package-name: image_transport_tutorial_msgs resize_image_transport image_transport_tutorials image_transport_tutorials_py
