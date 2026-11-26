@@ -13,11 +13,16 @@ Take a look at [my_subscriber.cpp](../image_transport_tutorials/src/my_subscribe
 Now, let's break down the code piece by piece.
 
 ```cpp
+#include <string>
+
 #include "cv_bridge/cv_bridge.hpp"
 #include "image_transport/image_transport.hpp"
 #include "opencv2/highgui.hpp"
+#include "rclcpp/executors.hpp"
 #include "rclcpp/logging.hpp"
-#include "rclcpp/rclcpp.hpp"
+#include "rclcpp/node.hpp"
+#include "rclcpp/node_options.hpp"
+#include "rclcpp/utilities.hpp"
 #include "sensor_msgs/msg/image.hpp"
 ```
 
