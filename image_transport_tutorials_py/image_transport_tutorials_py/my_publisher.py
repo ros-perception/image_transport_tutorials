@@ -18,10 +18,12 @@ from cv_bridge import CvBridge
 from image_transport_py import ImageTransport
 import numpy as np
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 
 
 class MyPublisher(Node):
+
     def __init__(self):
         super().__init__('my_publisher')
 
@@ -46,17 +48,12 @@ class MyPublisher(Node):
 
 
 def main(args=None):
-    rclpy.init(args=args)
-    node = MyPublisher()
-
     try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
+        with rclpy.init(args=args):
+            node = MyPublisher()
+            rclpy.spin(node)
+    except (KeyboardInterrupt, ExternalShutdownException):
         pass
-
-    # Destroy the node explicitly (optional)
-    node.destroy_node()
-    rclpy.shutdown()
 
 
 if __name__ == '__main__':

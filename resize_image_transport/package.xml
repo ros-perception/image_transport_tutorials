@@ -10,7 +10,7 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>cv_bridge</depend>
-  <depend>image_transport</depend>
+  <depend version_gte="6.4.7">image_transport</depend>
   <depend>image_transport_tutorial_msgs</depend>
   <depend>libopencv-dev</depend>
   <depend>pluginlib</depend>

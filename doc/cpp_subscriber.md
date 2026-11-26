@@ -46,10 +46,14 @@ We convert the ROS image message into an OpenCV image with BGR pixel encoding, t
 
 ```cpp
 rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("image_listener", options);
+// TransportHints does not actually declare the parameter
+node->declare_parameter<std::string>("image_transport", "raw");
 image_transport::ImageTransport it{*node};
 ```
 
-We create an `ImageTransport` instance, initializing it with our node.
+We declare the `image_transport` parameter ourselves, because `TransportHints` only reads it and does not declare it.
+Without this declaration, `-p image_transport:=<transport>` has no effect and the subscriber always falls back to `raw`.
+Then we create an `ImageTransport` instance, initializing it with our node.
 
 ```cpp
 image_transport::TransportHints hints{*node};
