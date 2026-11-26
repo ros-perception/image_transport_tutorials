@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 3.8)
 project(resize_image_transport)
 
-# Default to C++17
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 17)
-endif()
-
+# The C++/C standard comes from ament_ros_defaults (cxx_std_20 / c_std_17),
+# provided by the ament_cmake_ros_core::ament_ros_defaults INTERFACE target and
+# linked into the library's public interface below, propagating to consumers as
+# a minimum standard.
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_ros_core REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(image_transport REQUIRED)
 find_package(image_transport_tutorial_msgs REQUIRED)
@@ -30,6 +30,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 target_link_libraries(${PROJECT_NAME}
   PUBLIC
+    ament_cmake_ros_core::ament_ros_defaults
     image_transport::image_transport
     image_transport_tutorial_msgs::image_transport_tutorial_msgs
     ${sensor_msgs_TARGETS}
@@ -57,6 +58,7 @@ install(
 
 ament_export_targets(${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_dependencies(
+  ament_cmake_ros_core
   image_transport
   image_transport_tutorial_msgs
   sensor_msgs
