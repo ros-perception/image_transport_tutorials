@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <string>
+
 #include "cv_bridge/cv_bridge.hpp"
 #include "image_transport/image_transport.hpp"
 #include "opencv2/highgui.hpp"

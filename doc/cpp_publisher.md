@@ -16,7 +16,11 @@ For lines not explained here, review [Writing a Simple Publisher and Subscriber 
 #include "image_transport/image_transport.hpp"
 #include "opencv2/core/mat.hpp"
 #include "opencv2/imgcodecs.hpp"
-#include "rclcpp/rclcpp.hpp"
+#include "rclcpp/executors/single_threaded_executor.hpp"
+#include "rclcpp/node.hpp"
+#include "rclcpp/node_options.hpp"
+#include "rclcpp/rate.hpp"
+#include "rclcpp/utilities.hpp"
 ```
 
 These headers will allow us to load an image using OpenCV, convert it to the ROS message format, and publish it.

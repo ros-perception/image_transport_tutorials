@@ -64,10 +64,12 @@ Details:
 ----------
 "image_transport/raw"
  - Provided by package: image_transport
- - Publisher:
+ - Transport name: image_transport/raw
+ - Transport hint: raw
+ - Publisher (sensor_msgs/msg/Image):
       This is the default publisher. It publishes the Image as-is on the base topic.
 
- - Subscriber:
+ - Subscriber (sensor_msgs/msg/Image):
       This is the default pass-through subscriber for topics of type sensor_msgs/Image.
 ```
 
@@ -117,7 +119,7 @@ Transport plugins can expose such settings through ROS parameters.
 For example, `/camera/image/compressed` allows you to change the compression format and quality on the fly; see the package documentation for full details.
 
 For now let's adjust the JPEG quality.
-By default, the "compressed" transport uses JPEG compression at 80% quality.
+By default, the "compressed" transport uses JPEG compression at 95% quality.
 Let's change it to 15%.
 We can use the GUI, `rqt_reconfigure`, to change the quality:
 
@@ -125,14 +127,15 @@ We can use the GUI, `rqt_reconfigure`, to change the quality:
 $ ros2 run rqt_reconfigure rqt_reconfigure
 ```
 
-Now pick `/image_publisher` in the drop-down menu and move the `jpeg_quality` slider down to 15%.
+Now pick `/image_publisher` in the drop-down menu and move the `camera.image.compressed.jpeg_quality` slider down to 15%.
 Do you see the compression artifacts in your second view window?
 
-The `rqt_reconfigure` GUI has updated the ROS parameter `/image_publisher/jpeg_quality`.
+The `rqt_reconfigure` GUI has updated the ROS parameter `camera.image.compressed.jpeg_quality` on `/image_publisher`.
+Compressed transport parameters are scoped by base topic and transport name, so the `/camera/image` topic gives the `camera.image.compressed.` prefix.
 You can verify this by running:
 
 ```
-$ ros2 param get /image_publisher jpeg_quality
+$ ros2 param get /image_publisher camera.image.compressed.jpeg_quality
 ```
 
 This should display 15.

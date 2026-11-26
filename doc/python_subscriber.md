@@ -47,6 +47,7 @@ $ ros2 run image_transport_tutorials_py my_subscriber
 
 ## Transport Selection
 
-By default, `image_transport` uses the `raw` transport.
-You can specify a different transport by passing the `image_transport` parameter to `ImageTransport`.
+Both Python tutorial nodes pass `image_transport='compressed'` to `ImageTransport`, so they use the `compressed` transport.
+Without that argument, `image_transport` uses the `raw` transport.
+To use another installed transport, change the `image_transport` argument, for example `image_transport='raw'`.
 Alternatively, you can use your own ROS 2 parameter file for the imagetransport node via the `launch_params_filepath` parameter.

@@ -13,11 +13,16 @@ Take a look at [my_subscriber.cpp](../image_transport_tutorials/src/my_subscribe
 Now, let's break down the code piece by piece.
 
 ```cpp
+#include <string>
+
 #include "cv_bridge/cv_bridge.hpp"
 #include "image_transport/image_transport.hpp"
 #include "opencv2/highgui.hpp"
+#include "rclcpp/executors.hpp"
 #include "rclcpp/logging.hpp"
-#include "rclcpp/rclcpp.hpp"
+#include "rclcpp/node.hpp"
+#include "rclcpp/node_options.hpp"
+#include "rclcpp/utilities.hpp"
 #include "sensor_msgs/msg/image.hpp"
 ```
 
@@ -46,10 +51,14 @@ We convert the ROS image message into an OpenCV image with BGR pixel encoding, t
 
 ```cpp
 rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("image_listener", options);
+// TransportHints does not actually declare the parameter
+node->declare_parameter<std::string>("image_transport", "raw");
 image_transport::ImageTransport it{*node};
 ```
 
-We create an `ImageTransport` instance, initializing it with our node.
+We declare the `image_transport` parameter ourselves, because `TransportHints` only reads it and does not declare it.
+Without this declaration, `-p image_transport:=<transport>` has no effect and the subscriber always falls back to `raw`.
+Then we create an `ImageTransport` instance, initializing it with our node.
 
 ```cpp
 image_transport::TransportHints hints{*node};

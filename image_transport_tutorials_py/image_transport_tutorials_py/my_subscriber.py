@@ -16,10 +16,12 @@
 
 from image_transport_py import ImageTransport
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 
 
 class MySubscriber(Node):
+
     def __init__(self):
         super().__init__('my_subscriber')
 
@@ -33,17 +35,12 @@ class MySubscriber(Node):
 
 
 def main(args=None):
-    rclpy.init(args=args)
-    node = MySubscriber()
-
     try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
+        with rclpy.init(args=args):
+            node = MySubscriber()
+            rclpy.spin(node)
+    except (KeyboardInterrupt, ExternalShutdownException):
         pass
-
-    # Destroy the node explicitly (optional)
-    node.destroy_node()
-    rclpy.shutdown()
 
 
 if __name__ == '__main__':

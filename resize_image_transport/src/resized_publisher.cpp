@@ -31,11 +31,15 @@ void ResizedPublisher::publish(
   std::shared_ptr<void const> tracked_object;
   try {
     cv_image = cv_bridge::toCvShare(message, tracked_object, message.encoding)->image;
-  } catch (const cv::Exception & e) {
-    auto logger = rclcpp::get_logger("resized_publisher");
+  } catch (const cv_bridge::Exception & e) {
     RCLCPP_ERROR(
-      logger, "Could not convert from '%s' to '%s'.",
-      message.encoding.c_str(), message.encoding.c_str());
+      rclcpp::get_logger("resized_publisher"),
+      "Could not convert image with encoding '%s': %s", message.encoding.c_str(), e.what());
+    return;
+  } catch (const cv::Exception & e) {
+    RCLCPP_ERROR(
+      rclcpp::get_logger("resized_publisher"),
+      "Could not convert image with encoding '%s': %s", message.encoding.c_str(), e.what());
     return;
   }
 
@@ -50,7 +54,8 @@ void ResizedPublisher::publish(
   image_transport_tutorial_msgs::msg::ResizedImage resized_image;
   resized_image.original_height = cv_image.rows;
   resized_image.original_width = cv_image.cols;
-  resized_image.image = *(cv_bridge::CvImage(message.header, "bgr8", cv_image).toImageMsg());
+  resized_image.image = *(cv_bridge::CvImage(message.header, message.encoding,
+      buffer).toImageMsg());
   publisher->publish(resized_image);
 }
 }  // namespace resize_image_transport
