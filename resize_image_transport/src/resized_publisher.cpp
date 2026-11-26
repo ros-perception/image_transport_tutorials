@@ -54,7 +54,8 @@ void ResizedPublisher::publish(
   image_transport_tutorial_msgs::msg::ResizedImage resized_image;
   resized_image.original_height = cv_image.rows;
   resized_image.original_width = cv_image.cols;
-  resized_image.image = *(cv_bridge::CvImage(message.header, message.encoding, buffer).toImageMsg());
+  resized_image.image = *(cv_bridge::CvImage(message.header, message.encoding,
+      buffer).toImageMsg());
   publisher->publish(resized_image);
 }
 }  // namespace resize_image_transport

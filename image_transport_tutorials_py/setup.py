@@ -17,7 +17,11 @@ setup(
     maintainer_email='tfoldi@xsi.hu',
     description='Tutorials for image_transport_py',
     license='Apache-2.0',
-    tests_require=['pytest'],
+    extras_require={
+        'test': [
+            'pytest',
+        ],
+    },
     entry_points={
         'console_scripts': [
             'my_publisher = image_transport_tutorials_py.my_publisher:main',
